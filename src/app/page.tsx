@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
+import Image from "next/image";
 import Header from "@/components/Header";
 import {
   IoBriefcaseOutline,
@@ -11,6 +12,7 @@ import {
   IoGitBranchOutline,
   IoGlobeOutline,
   IoLayersOutline,
+  IoLockClosedOutline,
   IoLogoGithub,
   IoLogoLinkedin,
   IoLogoWhatsapp,
@@ -19,10 +21,12 @@ import {
   IoPeopleOutline,
   IoPhonePortraitOutline,
   IoRocketOutline,
+  IoSendOutline,
   IoServerOutline,
   IoSettingsOutline,
   IoShieldCheckmarkOutline,
   IoSparklesOutline,
+  IoTrophyOutline,
 } from "react-icons/io5";
 import type { IconType } from "react-icons";
 
@@ -88,6 +92,13 @@ const socialLinks: Social[] = [
     external: true,
   },
 ];
+
+const socialHandles: Record<string, string> = {
+  GitHub: "@murtamad07",
+  LinkedIn: "Murtamad Pratama",
+  Email: "murtamad501@gmail.com",
+  WhatsApp: "+62 857 6283 5973",
+};
 
 const techStack = [
   "TS",
@@ -205,7 +216,7 @@ const content = {
         description:
           "Reusable authentication modules and single sign-on proof-of-concepts for enterprise applications built around OutSystems workflows.",
         tags: ["OutSystems O11", "SSO", "OTP", "Enterprise Apps"],
-        progress: 90,
+        progress: 100,
         visual: "dashboard",
       },
     ] satisfies Project[],
@@ -361,8 +372,8 @@ const content = {
       projectFilters: ["All", "Ongoing", "Architecture", "Enterprise"],
       progressLabel: "Progress",
       viewDetails: "View Details",
-      challengeSubtitle: "Challenge and investment platform",
-      challengeButton: "View Architecture",
+      challengeSubtitle: "Challenge and Join Contest Platform",
+      // challengeButton: "View Architecture",
       careerHighlightsTitle: "Career Highlights",
       projectCtaTitle:
         "I turn business workflows into reliable software systems.",
@@ -382,7 +393,21 @@ const content = {
       contactTitle: "Let's build something reliable.",
       contactDescription:
         "Open to software engineering roles, remote collaboration, and product-focused projects.",
-      contactButton: "Email Me",
+      contactLabel: "Get In Touch",
+      contactSocialTitle: "Find me online",
+      contactSocialDescription:
+        "Prefer a quick chat? Reach me through any of these platforms.",
+      contactFormTitle: "Tell me about your project",
+      contactNameLabel: "Your name",
+      contactNamePlaceholder: "John Doe",
+      contactEmailLabel: "Email address",
+      contactEmailPlaceholder: "john@company.com",
+      contactSubjectLabel: "Subject",
+      contactSubjectPlaceholder: "Project collaboration",
+      contactMessageLabel: "Message",
+      contactMessagePlaceholder:
+        "Tell me a little about your project, timeline, and goals...",
+      contactButton: "Send Message",
       footerRights: "All rights reserved.",
     },
   },
@@ -488,7 +513,7 @@ const content = {
         description:
           "Reusable authentication modules dan proof-of-concepts SSO untuk aplikasi enterprise berbasis workflow OutSystems.",
         tags: ["OutSystems O11", "SSO", "OTP", "Enterprise Apps"],
-        progress: 90,
+        progress: 100,
         visual: "dashboard",
       },
     ] satisfies Project[],
@@ -645,7 +670,7 @@ const content = {
       progressLabel: "Progress",
       viewDetails: "Lihat Detail",
       challengeSubtitle: "Platform challenge dan investment",
-      challengeButton: "Lihat Arsitektur",
+      // challengeButton: "Lihat Arsitektur",
       careerHighlightsTitle: "Perjalanan Karier",
       projectCtaTitle:
         "Saya mengubah workflow bisnis menjadi sistem software yang reliable.",
@@ -665,7 +690,21 @@ const content = {
       contactTitle: "Mari bangun sesuatu yang reliable.",
       contactDescription:
         "Terbuka untuk role software engineering, kolaborasi remote, dan project berbasis produk.",
-      contactButton: "Email Saya",
+      contactLabel: "Hubungi Saya",
+      contactSocialTitle: "Temukan saya di",
+      contactSocialDescription:
+        "Lebih nyaman mengobrol langsung? Hubungi saya melalui platform berikut.",
+      contactFormTitle: "Ceritakan project Anda",
+      contactNameLabel: "Nama Anda",
+      contactNamePlaceholder: "Nama lengkap",
+      contactEmailLabel: "Alamat email",
+      contactEmailPlaceholder: "nama@perusahaan.com",
+      contactSubjectLabel: "Subjek",
+      contactSubjectPlaceholder: "Kolaborasi project",
+      contactMessageLabel: "Pesan",
+      contactMessagePlaceholder:
+        "Ceritakan sedikit tentang project, timeline, dan tujuan Anda...",
+      contactButton: "Kirim Pesan",
       footerRights: "Hak cipta dilindungi.",
     },
   },
@@ -714,10 +753,39 @@ function MetricCard({
   );
 }
 
+const sectionShell =
+  "relative min-h-screen scroll-mt-20 border-t border-white/10 px-4 py-24 shadow-[0_-32px_80px_rgba(0,0,0,0.42)] sm:px-6 lg:px-8";
+
+const sectionContent = "mx-auto w-full max-w-7xl";
+const contactInputClass =
+  "mt-2 w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-emerald-400/70 focus:bg-black/40 focus:ring-4 focus:ring-emerald-400/10";
+
+function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+
+  const formData = new FormData(event.currentTarget);
+  const name = String(formData.get("name") ?? "");
+  const email = String(formData.get("email") ?? "");
+  const subject = String(formData.get("subject") ?? "");
+  const message = String(formData.get("message") ?? "");
+  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
+
+  window.location.href = `mailto:murtamad501@gmail.com?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(body)}`;
+}
+
 function ProfileVisual({ label }: { label: string }) {
   return (
     <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-white/10 bg-slate-950 shadow-2xl shadow-emerald-950/40">
-      <img src={`assets/PhotoProfile.png`}></img>
+      <Image
+        src="/assets/PhotoProfile.png"
+        alt="Murtamad Pratama profile photo"
+        fill
+        priority
+        sizes="(min-width: 1024px) 384px, 80vw"
+        className="object-cover"
+      />
       <div className="absolute right-6 top-6 rounded-md border border-emerald-400/20 bg-black/50 px-3 py-2 text-[10px] font-semibold text-emerald-300 backdrop-blur">
         {label}
       </div>
@@ -728,154 +796,16 @@ function ProfileVisual({ label }: { label: string }) {
 function ProgressRing({ value }: { value: number }) {
   return (
     <div
-      className="grid h-24 w-24 place-items-center rounded-full p-2 shadow-[0_0_28px_rgba(52,211,153,0.12)]"
+      className="grid h-32 w-32 place-items-center rounded-full p-2.5 shadow-[0_0_32px_rgba(87,157,255,0.16)]"
       style={{
-        background: `conic-gradient(#34d399 ${value * 3.6}deg, rgba(30,41,59,0.9) 0deg)`,
+        background: `conic-gradient(#579dff ${value * 3.6}deg, rgba(27,44,64,0.9) 0deg)`,
       }}
     >
-      <div className="grid h-full w-full place-items-center rounded-full bg-slate-950 text-xl font-bold text-white">
+      <div className="grid h-full w-full place-items-center rounded-full bg-slate-950 text-2xl font-bold text-white">
         {value}%
       </div>
     </div>
   );
-}
-
-function FinanceVisual() {
-  return (
-    <div className="relative h-full min-h-64 overflow-hidden rounded-lg bg-[radial-gradient(circle_at_48%_54%,rgba(16,185,129,0.28),transparent_38%),linear-gradient(135deg,#020617,#0f172a)] p-6">
-      <div className="absolute left-9 top-8 h-52 w-28 -rotate-12 rounded-[1.6rem] border border-emerald-300/25 bg-black p-2 shadow-2xl shadow-emerald-900/40">
-        <div className="h-full rounded-[1.15rem] bg-slate-950 p-3">
-          <div className="mb-3 h-3 w-16 rounded-full bg-emerald-400/70" />
-          <div className="space-y-2">
-            <div className="h-16 rounded-md bg-emerald-400/10" />
-            <div className="h-3 rounded-full bg-slate-700" />
-            <div className="h-3 w-3/4 rounded-full bg-slate-800" />
-            <div className="grid grid-cols-3 gap-1 pt-2">
-              <span className="h-14 rounded bg-emerald-400/30" />
-              <span className="h-10 rounded bg-emerald-400/20" />
-              <span className="h-16 rounded bg-emerald-400/40" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="absolute bottom-8 right-8 h-52 w-32 rotate-6 rounded-[1.7rem] border border-sky-300/25 bg-black p-2 shadow-2xl">
-        <div className="h-full rounded-[1.2rem] bg-slate-950 p-3">
-          <div className="mb-4 flex items-center justify-between">
-            <span className="h-3 w-10 rounded bg-sky-400/70" />
-            <span className="h-6 w-6 rounded-full bg-emerald-400/80" />
-          </div>
-          <div className="h-16 rounded-md bg-sky-400/10" />
-          <div className="mt-3 space-y-2">
-            <span className="block h-3 rounded-full bg-slate-700" />
-            <span className="block h-3 w-2/3 rounded-full bg-slate-800" />
-            <span className="block h-8 rounded-md bg-emerald-400/20" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ChallengeVisual({
-  subtitle,
-  buttonLabel,
-}: {
-  subtitle: string;
-  buttonLabel: string;
-}) {
-  return (
-    <div className="relative flex h-full min-h-64 items-end overflow-hidden rounded-lg bg-[linear-gradient(145deg,#0b0f0f,#171717_55%,#020617)] p-6">
-      <div className="absolute inset-x-8 top-12 h-px bg-slate-500/70" />
-      {[0, 1, 2, 3].map((item) => (
-        <div
-          key={item}
-          className="absolute top-12 h-28 w-16 rounded-b-[2rem] bg-gradient-to-b from-emerald-600 to-slate-950 shadow-xl"
-          style={{ left: `${58 + item * 34}px` }}
-        >
-          <span className="absolute -top-5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-t-full border-t border-l border-emerald-300" />
-        </div>
-      ))}
-      <div className="relative z-10 max-w-44">
-        <p className="text-3xl font-bold text-white">Inspire Robotics</p>
-        <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-slate-300">
-          {subtitle}
-        </p>
-        <button className="mt-5 rounded-md bg-white px-4 py-2 text-xs font-bold text-slate-950">
-          {buttonLabel}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function DashboardVisual() {
-  return (
-    <div className="h-full min-h-64 overflow-hidden rounded-lg bg-slate-950 p-4">
-      <div className="h-full rounded-md border border-slate-700 bg-white p-3 shadow-2xl">
-        <div className="mb-4 flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-red-400" />
-          <span className="h-2 w-2 rounded-full bg-yellow-400" />
-          <span className="h-2 w-2 rounded-full bg-emerald-400" />
-          <span className="ml-3 h-3 w-24 rounded-full bg-slate-200" />
-        </div>
-        <div className="grid h-[calc(100%-1.5rem)] grid-cols-[64px_1fr] gap-3">
-          <div className="rounded-md bg-slate-900 p-2">
-            <span className="mb-4 block h-5 w-8 rounded bg-emerald-400" />
-            {[0, 1, 2, 3, 4].map((item) => (
-              <span
-                key={item}
-                className="mb-3 block h-2 rounded bg-slate-700"
-              />
-            ))}
-          </div>
-          <div className="space-y-3">
-            <div className="grid grid-cols-3 gap-3">
-              {[0, 1, 2].map((item) => (
-                <div key={item} className="h-16 rounded-md bg-slate-100 p-3">
-                  <span className="block h-3 w-10 rounded bg-slate-300" />
-                  <span className="mt-3 block h-4 w-14 rounded bg-emerald-200" />
-                </div>
-              ))}
-            </div>
-            <div className="h-28 rounded-md bg-slate-100 p-4">
-              <div className="flex h-full items-end gap-2">
-                {[32, 56, 40, 72, 48, 88, 64].map((height) => (
-                  <span
-                    key={height}
-                    className="flex-1 rounded-t bg-emerald-400"
-                    style={{ height: `${height}%` }}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProjectVisual({
-  type,
-  labels,
-}: {
-  type: string;
-  labels: { challengeSubtitle: string; challengeButton: string };
-}) {
-  if (type === "challenge") {
-    return (
-      <ChallengeVisual
-        subtitle={labels.challengeSubtitle}
-        buttonLabel={labels.challengeButton}
-      />
-    );
-  }
-
-  if (type === "dashboard") {
-    return <DashboardVisual />;
-  }
-
-  return <FinanceVisual />;
 }
 
 function ProjectCard({
@@ -884,43 +814,60 @@ function ProjectCard({
 }: {
   project: Project;
   labels: {
-    challengeSubtitle: string;
-    challengeButton: string;
     progressLabel: string;
-    viewDetails: string;
   };
 }) {
+  const ProjectIcon =
+    project.visual === "challenge"
+      ? IoTrophyOutline
+      : project.visual === "dashboard"
+        ? IoLockClosedOutline
+        : null;
+
   return (
-    <article className="grid gap-5 rounded-lg border border-white/10 bg-slate-950/70 p-4 shadow-2xl shadow-black/30 md:grid-cols-[1fr_1.1fr_120px]">
-      <ProjectVisual type={project.visual} labels={labels} />
-      <div className="flex flex-col justify-center">
-        <Badge>{project.status}</Badge>
-        <h3 className="mt-4 text-2xl font-bold text-white">{project.title}</h3>
-        <p className="mt-4 text-sm leading-7 text-slate-300">
-          {project.description}
-        </p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-md border border-white/10 bg-black/40 px-3 py-1 text-xs font-medium text-slate-200"
-            >
-              {tag}
+    <article className="flex h-full flex-col p-6 lg:p-7">
+      <div className="flex min-h-16 items-center justify-between gap-4">
+        {project.visual === "finance" ? (
+          <Image
+            src="/assets/FinanceApp.png"
+            alt="Personal Finance App logo"
+            width={2048}
+            height={622}
+            className="h-14 w-40 object-contain object-left"
+          />
+        ) : (
+          ProjectIcon && (
+            <span className="grid h-14 w-14 place-items-center rounded-lg border border-emerald-400/25 bg-emerald-400/10 text-3xl text-emerald-300">
+              <ProjectIcon aria-hidden="true" />
             </span>
-          ))}
-        </div>
+          )
+        )}
+        <Badge>{project.status}</Badge>
       </div>
-      <div className="flex items-center justify-between gap-5 border-white/10 md:flex-col md:justify-center md:border-l md:pl-5">
-        <div className="text-center">
-          <ProgressRing value={project.progress} />
-          <p className="mt-3 text-xs text-slate-400">{labels.progressLabel}</p>
-        </div>
-        <a
-          href="#contact"
-          className="rounded-md border border-emerald-400/20 bg-emerald-400/5 px-4 py-3 text-xs font-bold text-emerald-300 transition hover:bg-emerald-400/15"
-        >
-          {labels.viewDetails}
-        </a>
+
+      <h3 className="mt-5 text-xl font-bold leading-tight text-white">
+        {project.title}
+      </h3>
+      <p className="mt-3 text-sm leading-6 text-slate-400">
+        {project.description}
+      </p>
+
+      <div className="my-8 flex flex-col items-center">
+        <ProgressRing value={project.progress} />
+        <p className="mt-3 text-xs font-medium uppercase tracking-[0.16em] text-slate-500">
+          {labels.progressLabel}
+        </p>
+      </div>
+
+      <div className="mt-auto flex flex-wrap gap-2">
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="rounded border border-white/10 bg-black/20 px-2.5 py-1 text-[11px] font-medium text-slate-300"
+          >
+            {tag}
+          </span>
+        ))}
       </div>
     </article>
   );
@@ -930,7 +877,7 @@ function ServiceDevice() {
   return (
     <div className="relative mx-auto min-h-72 w-full max-w-lg">
       <div className="absolute left-1/2 top-14 h-44 w-80 -translate-x-1/2 rounded-lg border border-slate-600 bg-slate-950 p-3 shadow-2xl shadow-emerald-950/40 sm:w-96">
-        <div className="h-full rounded-md border border-slate-800 bg-[linear-gradient(135deg,#111827,#020617)] p-4">
+        <div className="h-full rounded-md border border-slate-800 bg-[linear-gradient(135deg,#0d2033,#071624)] p-4">
           <div className="mb-4 flex justify-between">
             <span className="h-3 w-20 rounded-full bg-emerald-400/70" />
             <span className="h-3 w-12 rounded-full bg-slate-700" />
@@ -1013,7 +960,7 @@ function Sosmed({ item }: { item: Social }) {
 
 function Footer({ rights }: { rights: string }) {
   return (
-    <footer className="border-t border-white/10 py-8">
+    <footer className="border-t border-white/10 bg-[#061523] py-8">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-4 sm:px-6 md:flex-row lg:px-8">
         <a
           href="#about"
@@ -1038,18 +985,15 @@ export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
   const copy = content[language];
   const projectLabels = {
-    challengeSubtitle: copy.ui.challengeSubtitle,
-    challengeButton: copy.ui.challengeButton,
     progressLabel: copy.ui.progressLabel,
-    viewDetails: copy.ui.viewDetails,
   };
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#020403] text-slate-100">
-      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_12%_8%,rgba(16,185,129,0.22),transparent_30%),radial-gradient(circle_at_88%_20%,rgba(20,184,166,0.12),transparent_32%),linear-gradient(180deg,#020403,#020617_46%,#020403)]" />
-      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(52,211,153,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(52,211,153,0.05)_1px,transparent_1px)] bg-[size:42px_42px] opacity-20" />
+    <main className="min-h-screen overflow-x-hidden bg-[#061523] text-slate-100">
+      <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_12%_8%,rgba(87,157,255,0.13),transparent_30%),radial-gradient(circle_at_88%_20%,rgba(47,111,204,0.08),transparent_32%),linear-gradient(180deg,#061523,#071a2b_46%,#061523)]" />
+      <div className="pointer-events-none fixed inset-0 bg-[linear-gradient(rgba(87,157,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(87,157,255,0.03)_1px,transparent_1px)] bg-[size:42px_42px] opacity-20" />
 
-      <div className="relative z-10 pt-20">
+      <div className="relative z-10">
         <Header
           connectLabel={copy.headerConnect}
           language={language}
@@ -1059,15 +1003,15 @@ export default function Home() {
 
         <section
           id="about"
-          className="mx-auto max-w-7xl scroll-mt-24 px-4 py-10 sm:px-6 lg:px-8 lg:py-14"
+          className={`${sectionShell} border-t-0 bg-[linear-gradient(180deg,rgba(6,21,35,0.95),rgba(7,24,40,0.98))] pt-28`}
         >
+          <div className={sectionContent}>
           <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
-            <ProfileVisual label={copy.ui.profileBadge} />
             <div>
               <Badge>{copy.ui.profileBadge}</Badge>
-              <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-                {copy.ui.heroIntro}{" "}
-                <span className="block text-emerald-400">Murtamad Pratama</span>
+              <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-6xl">
+                <span className="block text-emerald-400">{copy.ui.heroIntro}</span>
+                <span className="block">Murtamad Pratama</span>
               </h1>
               <p className="mt-6 max-w-xl text-base leading-8 text-slate-300">
                 {copy.ui.heroSummary}
@@ -1078,6 +1022,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            <ProfileVisual label={copy.ui.profileBadge} />
           </div>
 
           <div className="mt-10 grid gap-4 rounded-lg border border-white/10 bg-slate-950/60 p-5 shadow-xl shadow-black/20 sm:grid-cols-2 lg:grid-cols-4">
@@ -1127,7 +1072,7 @@ export default function Home() {
                     key={item.role}
                     className="relative border-l border-emerald-400/30 pl-7"
                   >
-                    <span className="absolute -left-[7px] top-1 h-3.5 w-3.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(52,211,153,0.12)]" />
+                    <span className="absolute -left-[7px] top-1 h-3.5 w-3.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(87,157,255,0.12)]" />
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <h3 className="font-bold text-white">{item.role}</h3>
@@ -1201,39 +1146,25 @@ export default function Home() {
               </div>
             </div>
           </div>
+          </div>
         </section>
 
         <section
           id="projects"
-          className="mx-auto max-w-7xl scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"
+          className={`${sectionShell} bg-[linear-gradient(180deg,rgba(7,24,40,0.98),rgba(6,21,35,0.98))]`}
         >
+          <div className={sectionContent}>
           <SectionLabel>{copy.ui.workLabel}</SectionLabel>
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-4xl font-extrabold tracking-tight text-white">
-                {copy.ui.projectsTitle}
-              </h2>
-              <p className="mt-3 text-slate-400">
-                {copy.ui.projectsDescription}
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {copy.ui.projectFilters.map((item, index) => (
-                <button
-                  key={item}
-                  className={`rounded-md border px-4 py-2 text-sm font-semibold transition ${
-                    index === 0
-                      ? "border-emerald-400 bg-emerald-400 text-slate-950"
-                      : "border-white/10 bg-slate-950/60 text-slate-300 hover:border-emerald-400/40"
-                  }`}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
+          <div>
+            <h2 className="text-4xl font-extrabold tracking-tight text-white">
+              {copy.ui.projectsTitle}
+            </h2>
+            <p className="mt-3 text-slate-400">
+              {copy.ui.projectsDescription}
+            </p>
           </div>
 
-          <div className="mt-8 space-y-6">
+          <div className="mt-8 grid divide-y divide-white/10 overflow-hidden rounded-xl border border-white/15 bg-slate-950/65 shadow-2xl shadow-black/30 md:grid-cols-3 md:divide-x md:divide-y-0 md:divide-white/10">
             {copy.projects.map((project) => (
               <ProjectCard
                 key={project.title}
@@ -1250,7 +1181,7 @@ export default function Home() {
             <div className="mt-8 grid gap-6 md:grid-cols-4">
               {copy.roadmap.map((item) => (
                 <div key={item.quarter} className="relative">
-                  <span className="mb-4 block h-4 w-4 rounded-full bg-emerald-400 shadow-[0_0_0_8px_rgba(52,211,153,0.10)]" />
+                  <span className="mb-4 block h-4 w-4 rounded-full bg-emerald-400 shadow-[0_0_0_8px_rgba(87,157,255,0.10)]" />
                   <p className="font-bold text-emerald-300">{item.quarter}</p>
                   <p className="mt-2 text-sm leading-6 text-slate-300">
                     {item.title}
@@ -1281,12 +1212,14 @@ export default function Home() {
               {copy.ui.projectCtaButton}
             </a>
           </div>
+          </div>
         </section>
 
         <section
           id="services"
-          className="mx-auto max-w-7xl scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"
+          className={`${sectionShell} bg-[linear-gradient(180deg,rgba(6,21,35,0.98),rgba(7,26,43,0.98))]`}
         >
+          <div className={sectionContent}>
           <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
             <div>
               <SectionLabel>{copy.ui.servicesLabel}</SectionLabel>
@@ -1377,28 +1310,129 @@ export default function Home() {
               ))}
             </div>
           </div>
+          </div>
         </section>
 
         <section
           id="contact"
-          className="mx-auto max-w-7xl scroll-mt-24 px-4 pb-16 sm:px-6 lg:px-8"
+          className={`${sectionShell} flex items-center bg-[linear-gradient(180deg,rgba(7,26,43,0.98),rgba(6,21,35,0.99))]`}
         >
-          <div className="rounded-lg border border-emerald-400/20 bg-[linear-gradient(135deg,rgba(16,185,129,0.16),rgba(15,23,42,0.86))] p-6 md:p-8">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-2xl font-bold text-white">
-                  {copy.ui.contactTitle}
-                </h2>
-                <p className="mt-2 text-sm text-slate-300">
-                  {copy.ui.contactDescription}
-                </p>
+          <div className={sectionContent}>
+            <div className="relative overflow-hidden rounded-2xl border border-emerald-400/20 bg-[linear-gradient(135deg,rgba(87,157,255,0.12),rgba(10,31,51,0.95)_48%,rgba(6,21,35,0.99))] p-6 shadow-2xl shadow-black/30 md:p-10">
+              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
+              <div className="pointer-events-none absolute -bottom-32 left-1/3 h-64 w-64 rounded-full bg-teal-400/10 blur-3xl" />
+
+              <div className="relative grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
+                <div className="flex flex-col">
+                  <SectionLabel>{copy.ui.contactLabel}</SectionLabel>
+                  <h2 className="max-w-lg text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                    {copy.ui.contactTitle}
+                  </h2>
+                  <p className="mt-4 max-w-lg text-sm leading-7 text-slate-300">
+                    {copy.ui.contactDescription}
+                  </p>
+
+                  <div className="mt-9">
+                    <h3 className="font-bold text-white">
+                      {copy.ui.contactSocialTitle}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-slate-400">
+                      {copy.ui.contactSocialDescription}
+                    </p>
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                      {socialLinks.map((item) => {
+                        const Icon = item.icon;
+
+                        return (
+                          <a
+                            key={item.label}
+                            href={item.href}
+                            target={item.external ? "_blank" : undefined}
+                            rel={item.external ? "noreferrer" : undefined}
+                            className="group flex items-center gap-3 rounded-xl border border-white/10 bg-black/25 p-3.5 transition hover:-translate-y-0.5 hover:border-emerald-400/40 hover:bg-emerald-400/10"
+                          >
+                            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-emerald-400/20 bg-emerald-400/10 text-xl text-emerald-300 transition group-hover:bg-emerald-400 group-hover:text-slate-950">
+                              <Icon aria-hidden="true" />
+                            </span>
+                            <span className="min-w-0">
+                              <span className="block text-xs text-slate-500">
+                                {item.label}
+                              </span>
+                              <span className="block truncate text-sm font-semibold text-slate-200">
+                                {socialHandles[item.label]}
+                              </span>
+                            </span>
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                <form
+                  onSubmit={handleContactSubmit}
+                  className="rounded-xl border border-white/10 bg-slate-950/70 p-5 shadow-xl shadow-black/20 backdrop-blur-sm sm:p-7"
+                >
+                  <h3 className="text-xl font-bold text-white">
+                    {copy.ui.contactFormTitle}
+                  </h3>
+
+                  <div className="mt-6 grid gap-5 sm:grid-cols-2">
+                    <label className="text-sm font-medium text-slate-300">
+                      {copy.ui.contactNameLabel}
+                      <input
+                        required
+                        name="name"
+                        type="text"
+                        autoComplete="name"
+                        placeholder={copy.ui.contactNamePlaceholder}
+                        className={contactInputClass}
+                      />
+                    </label>
+                    <label className="text-sm font-medium text-slate-300">
+                      {copy.ui.contactEmailLabel}
+                      <input
+                        required
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        placeholder={copy.ui.contactEmailPlaceholder}
+                        className={contactInputClass}
+                      />
+                    </label>
+                  </div>
+
+                  <label className="mt-5 block text-sm font-medium text-slate-300">
+                    {copy.ui.contactSubjectLabel}
+                    <input
+                      required
+                      name="subject"
+                      type="text"
+                      placeholder={copy.ui.contactSubjectPlaceholder}
+                      className={contactInputClass}
+                    />
+                  </label>
+
+                  <label className="mt-5 block text-sm font-medium text-slate-300">
+                    {copy.ui.contactMessageLabel}
+                    <textarea
+                      required
+                      name="message"
+                      rows={6}
+                      placeholder={copy.ui.contactMessagePlaceholder}
+                      className={`${contactInputClass} resize-y`}
+                    />
+                  </label>
+
+                  <button
+                    type="submit"
+                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-400 px-6 py-3.5 text-sm font-extrabold text-slate-950 transition hover:bg-emerald-300 focus:outline-none focus:ring-4 focus:ring-emerald-400/20"
+                  >
+                    {copy.ui.contactButton}
+                    <IoSendOutline className="text-lg" aria-hidden="true" />
+                  </button>
+                </form>
               </div>
-              <a
-                href="mailto:murtamad501@gmail.com"
-                className="rounded-md bg-emerald-400 px-6 py-3 text-center text-sm font-extrabold text-slate-950 transition hover:bg-emerald-300"
-              >
-                {copy.ui.contactButton}
-              </a>
             </div>
           </div>
         </section>

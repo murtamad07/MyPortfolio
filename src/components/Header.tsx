@@ -21,11 +21,11 @@ export default function Header({
   onLanguageChange,
 }: HeaderProps) {
   return (
-    <header className="fixed inset-x-0 top-0 z-[100] border-b border-white/10 bg-black/70 backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-[100] border-b border-white/10 bg-[#061523]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <a
           href="#about"
-          className="text-3xl font-black tracking-tight text-emerald-400"
+          className="text-3xl font-black tracking-tight text-white"
         >
           MP
         </a>
@@ -68,7 +68,7 @@ export default function Header({
           </div>
           <a
             href="mailto:murtamad501@gmail.com"
-            className="hidden rounded-md border border-emerald-400/60 px-5 py-2.5 text-sm font-bold text-emerald-300 transition hover:bg-emerald-400 hover:text-slate-950 sm:inline-flex"
+            className="hidden rounded-md bg-emerald-400 px-5 py-2.5 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-950/30 transition hover:bg-emerald-300 sm:inline-flex"
           >
             {connectLabel}
           </a>

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020403;
-  --foreground: #f8fafc;
+  --background: #061523;
+  --foreground: #f3f7fc;
   --font-app-sans: Arial, Helvetica, sans-serif;
   --font-app-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
@@ -10,6 +10,28 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-slate-50: #f7f9fc;
+  --color-slate-100: #eef2f8;
+  --color-slate-200: #dce4f0;
+  --color-slate-300: #c1cddd;
+  --color-slate-400: #8fa0b5;
+  --color-slate-500: #687a91;
+  --color-slate-600: #4a5b70;
+  --color-slate-700: #304156;
+  --color-slate-800: #1b2c40;
+  --color-slate-900: #0d2033;
+  --color-slate-950: #071624;
+  --color-emerald-100: #dcecff;
+  --color-emerald-200: #b9d8ff;
+  --color-emerald-300: #8fc0ff;
+  --color-emerald-400: #579dff;
+  --color-emerald-500: #3b82f6;
+  --color-emerald-600: #2f6fcc;
+  --color-emerald-700: #2457a4;
+  --color-emerald-800: #1e4680;
+  --color-emerald-900: #19365e;
+  --color-emerald-950: #0c213f;
+  --color-teal-400: #72b5ff;
   --font-sans: var(--font-app-sans);
   --font-mono: var(--font-app-mono);
 }
@@ -29,6 +51,6 @@ html {
 }
 
 ::selection {
-  background: rgba(52, 211, 153, 0.35);
+  background: rgba(87, 157, 255, 0.38);
   color: #ffffff;
 }
