@@ -14,7 +14,11 @@ import {
   IoLayersOutline,
   IoLockClosedOutline,
   IoLogoGithub,
+  IoLogoJavascript,
   IoLogoLinkedin,
+  IoLogoNodejs,
+  IoLogoReact,
+  IoLogoVercel,
   IoLogoWhatsapp,
   IoLocationOutline,
   IoMailOutline,
@@ -100,17 +104,17 @@ const socialHandles: Record<string, string> = {
   WhatsApp: "+62 857 6283 5973",
 };
 
-const techStack = [
-  "TS",
-  "JS",
-  "React",
-  "Next",
-  "RN",
-  "Nest",
-  "SQL",
-  "Prisma",
-  "Supa",
-  "O11",
+const techStack: { label: string; icon: IconType }[] = [
+  { label: "TS", icon: IoCodeSlashOutline },
+  { label: "JS", icon: IoLogoJavascript },
+  { label: "React", icon: IoLogoReact },
+  { label: "Next", icon: IoLogoVercel },
+  { label: "RN", icon: IoPhonePortraitOutline },
+  { label: "Nest", icon: IoLogoNodejs },
+  { label: "SQL", icon: IoServerOutline },
+  { label: "Prisma", icon: IoGitBranchOutline },
+  { label: "Supa", icon: IoCloudUploadOutline },
+  { label: "O11", icon: IoLayersOutline },
 ];
 
 const content = {
@@ -754,26 +758,12 @@ function MetricCard({
 }
 
 const sectionShell =
-  "relative min-h-screen scroll-mt-20 border-t border-white/10 px-4 py-24 shadow-[0_-32px_80px_rgba(0,0,0,0.42)] sm:px-6 lg:px-8";
+  "relative min-h-screen scroll-mt-20 border-t border-white/10 py-24 shadow-[0_-32px_80px_rgba(0,0,0,0.42)]";
 
-const sectionContent = "mx-auto w-full max-w-7xl";
+const sectionContent = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 const contactInputClass =
   "mt-2 w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-emerald-400/70 focus:bg-black/40 focus:ring-4 focus:ring-emerald-400/10";
 
-function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
-  event.preventDefault();
-
-  const formData = new FormData(event.currentTarget);
-  const name = String(formData.get("name") ?? "");
-  const email = String(formData.get("email") ?? "");
-  const subject = String(formData.get("subject") ?? "");
-  const message = String(formData.get("message") ?? "");
-  const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-
-  window.location.href = `mailto:murtamad501@gmail.com?subject=${encodeURIComponent(
-    subject,
-  )}&body=${encodeURIComponent(body)}`;
-}
 
 function ProfileVisual({ label }: { label: string }) {
   return (
@@ -983,10 +973,57 @@ function Footer({ rights }: { rights: string }) {
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
+  const [contactStatus, setContactStatus] = useState<
+    "idle" | "sending" | "sent" | "error"
+  >("idle");
   const copy = content[language];
   const projectLabels = {
     progressLabel: copy.ui.progressLabel,
   };
+  const contactCopy =
+    language === "id"
+      ? {
+          sending: "Mengirim...",
+          success: "Pesan terkirim. Terima kasih!",
+          error: "Pesan gagal dikirim. Coba lagi sebentar lagi.",
+        }
+      : {
+          sending: "Sending...",
+          success: "Message sent. Thank you!",
+          error: "Message failed to send. Please try again soon.",
+        };
+  const contactNotice =
+    contactStatus === "sent"
+      ? contactCopy.success
+      : contactStatus === "error"
+        ? contactCopy.error
+        : "";
+
+  async function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setContactStatus("sending");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      if (response.ok) {
+        form.reset();
+        setContactStatus("sent");
+        return;
+      }
+    } catch {
+      // The visible status below is enough for this simple form.
+    }
+
+    setContactStatus("error");
+  }
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#061523] text-slate-100">
@@ -1127,12 +1164,17 @@ export default function Home() {
                   {copy.ui.techStackTitle}
                 </h2>
                 <div className="mt-5 grid grid-cols-5 gap-3">
-                  {techStack.map((item) => (
+                  {techStack.map(({ label, icon: Icon }) => (
                     <span
-                      key={item}
-                      className="grid h-12 place-items-center rounded-md border border-white/10 bg-black/40 text-xs font-black text-emerald-300"
+                      key={label}
+                      title={label}
+                      aria-label={label}
+                      className="flex h-14 flex-col items-center justify-center gap-1 rounded-md border border-white/10 bg-black/40 text-emerald-300"
                     >
-                      {item}
+                      <Icon className="text-2xl" aria-hidden="true" />
+                      <span className="text-[10px] font-bold text-slate-400">
+                        {label}
+                      </span>
                     </span>
                   ))}
                 </div>
@@ -1402,6 +1444,11 @@ export default function Home() {
                     </label>
                   </div>
 
+                  <label className="hidden" aria-hidden="true">
+                    Company
+                    <input name="company" tabIndex={-1} autoComplete="off" />
+                  </label>
+
                   <label className="mt-5 block text-sm font-medium text-slate-300">
                     {copy.ui.contactSubjectLabel}
                     <input
@@ -1426,11 +1473,26 @@ export default function Home() {
 
                   <button
                     type="submit"
-                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-400 px-6 py-3.5 text-sm font-extrabold text-slate-950 transition hover:bg-emerald-300 focus:outline-none focus:ring-4 focus:ring-emerald-400/20"
+                    disabled={contactStatus === "sending"}
+                    className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-400 px-6 py-3.5 text-sm font-extrabold text-slate-950 transition hover:bg-emerald-300 focus:outline-none focus:ring-4 focus:ring-emerald-400/20 disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    {copy.ui.contactButton}
+                    {contactStatus === "sending"
+                      ? contactCopy.sending
+                      : copy.ui.contactButton}
                     <IoSendOutline className="text-lg" aria-hidden="true" />
                   </button>
+                  {contactNotice && (
+                    <p
+                      role="status"
+                      className={`mt-4 text-sm ${
+                        contactStatus === "sent"
+                          ? "text-emerald-300"
+                          : "text-red-300"
+                      }`}
+                    >
+                      {contactNotice}
+                    </p>
+                  )}
                 </form>
               </div>
             </div>
