@@ -754,9 +754,9 @@ function MetricCard({
 }
 
 const sectionShell =
-  "relative min-h-screen scroll-mt-20 border-t border-white/10 px-4 py-24 shadow-[0_-32px_80px_rgba(0,0,0,0.42)] sm:px-6 lg:px-8";
+  "relative min-h-screen scroll-mt-20 border-t border-white/10 py-24 shadow-[0_-32px_80px_rgba(0,0,0,0.42)]";
 
-const sectionContent = "mx-auto w-full max-w-7xl";
+const sectionContent = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 const contactInputClass =
   "mt-2 w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-emerald-400/70 focus:bg-black/40 focus:ring-4 focus:ring-emerald-400/10";
 
