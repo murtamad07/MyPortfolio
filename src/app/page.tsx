@@ -28,7 +28,6 @@ import {
   IoSendOutline,
   IoServerOutline,
   IoSettingsOutline,
-  IoShieldCheckmarkOutline,
   IoSparklesOutline,
   IoTrophyOutline,
 } from "react-icons/io5";
@@ -39,10 +38,18 @@ type Language = "en" | "id";
 type Project = {
   title: string;
   status: string;
-  description: string;
-  tags: string[];
-  progress: number;
+  context: string;
+  role: string;
+  stack: string[];
+  responsibilities: string[];
+  actionLabel: string;
+  actionHref?: string;
   visual: string;
+};
+
+type SkillGroup = {
+  category: string;
+  items: { name: string; level: string }[];
 };
 
 type Service = {
@@ -84,6 +91,12 @@ const socialLinks: Social[] = [
     external: true,
   },
   {
+    label: "Portfolio",
+    icon: IoGlobeOutline,
+    href: "https://murtamadpratama.my.id",
+    external: true,
+  },
+  {
     label: "Email",
     icon: IoMailOutline,
     href: "mailto:murtamad501@gmail.com",
@@ -100,6 +113,7 @@ const socialLinks: Social[] = [
 const socialHandles: Record<string, string> = {
   GitHub: "@murtamad07",
   LinkedIn: "Murtamad Pratama",
+  Portfolio: "murtamadpratama.my.id",
   Email: "murtamad501@gmail.com",
   WhatsApp: "+62 857 6283 5973",
 };
@@ -186,41 +200,88 @@ const content = {
       },
     ],
     skills: [
-      { name: "OutSystems O11", value: 90 },
-      { name: "TypeScript & JavaScript", value: 82 },
-      { name: "React.js & Next.js", value: 80 },
-      { name: "React Native", value: 70 },
-      { name: "NestJS & REST APIs", value: 74 },
-      { name: "PostgreSQL, Prisma & Supabase", value: 76 },
-      { name: "System Design, RBAC & Auth", value: 78 },
-      { name: "AI-Assisted Development Workflow", value: 85 },
-    ],
+      {
+        category: "Enterprise & Low-Code",
+        items: [
+          { name: "OutSystems O11", level: "Strong" },
+          { name: "UiPath", level: "Working Experience" },
+        ],
+      },
+      {
+        category: "Frontend",
+        items: [
+          { name: "React", level: "Working Experience" },
+          { name: "Next.js", level: "Working Experience" },
+          { name: "TypeScript", level: "Working Experience" },
+          { name: "React Native", level: "Working Experience" },
+          { name: "Tailwind CSS", level: "Working Experience" },
+        ],
+      },
+      {
+        category: "Backend & Database",
+        items: [
+          { name: "NestJS", level: "Working Experience" },
+          { name: "REST API", level: "Working Experience" },
+          { name: "PostgreSQL", level: "Working Experience" },
+          { name: "Prisma", level: "Working Experience" },
+          { name: "Supabase", level: "Working Experience" },
+        ],
+      },
+      {
+        category: "Architecture & Workflow",
+        items: [
+          { name: "RBAC", level: "Strong" },
+          { name: "System Design", level: "Working Experience" },
+          { name: "Database Design", level: "Working Experience" },
+          { name: "AI-assisted Development", level: "Strong" },
+          { name: "Technical Documentation", level: "Strong" },
+        ],
+      },
+    ] satisfies SkillGroup[],
     projects: [
       {
         title: "Personal Finance App",
         status: "Ongoing",
-        description:
-          "Subscription-based personal finance platform with authentication, transaction tracking, and scalable database architecture.",
-        tags: ["Next.js", "TypeScript", "Prisma", "Supabase", "Auth"],
-        progress: 62,
+        context:
+          "Subscription-based personal finance platform for transaction tracking, category and bank management, dashboard insights, and a scalable data model.",
+        role: "Full-stack developer and product owner",
+        stack: ["Next.js", "TypeScript", "Prisma", "Supabase", "Auth"],
+        responsibilities: [
+          "Built authentication, transaction workflows, category and bank management, and dashboard structure.",
+          "Designed the database structure to support subscription-based product growth.",
+          "Planned React Native mobile integration for the next product phase.",
+        ],
+        actionLabel: "Private Project",
         visual: "finance",
       },
       {
         title: "Inspire Robotics Challenges Platform",
-        status: "Architecture",
-        description:
-          "End-to-end challenge and investment management platform architecture with RBAC, authentication flow, and transaction lifecycle.",
-        tags: ["System Design", "RBAC", "Auth", "Frontend", "Backend"],
-        progress: 78,
+        status: "Platform Build",
+        context:
+          "Challenge and investment management platform for competition lifecycle, team registration, and admin/user operations.",
+        role: "Full-stack engineer with AI-assisted planning workflow",
+        stack: ["Next.js", "TypeScript", "RBAC", "Auth", "Dashboard"],
+        responsibilities: [
+          "Implemented authentication flow, role-based access control, challenge lifecycle, and team registration flow.",
+          "Built admin and user dashboard foundations under a fast-paced delivery timeline.",
+          "Used AI-assisted planning and implementation workflows to move from requirements to working features faster.",
+        ],
+        actionLabel: "Case Study Coming Soon",
         visual: "challenge",
       },
       {
-        title: "Enterprise OTP & SSO Modules",
+        title: "Enterprise OutSystems Work",
         status: "Enterprise",
-        description:
-          "Reusable authentication modules and single sign-on proof-of-concepts for enterprise applications built around OutSystems workflows.",
-        tags: ["OutSystems O11", "SSO", "OTP", "Enterprise Apps"],
-        progress: 100,
+        context:
+          "Production support and enhancement work for enterprise applications used across Singapore, Indonesia, Malaysia, Europe, Africa, and the USA.",
+        role: "Enterprise OutSystems Developer",
+        stack: ["OutSystems O11", "Reactive Web", "Traditional Web", "OTP", "SSO"],
+        responsibilities: [
+          "Maintained and supported 8 enterprise applications used across global business units.",
+          "Built a reusable OTP module and developed an SSO proof-of-concept.",
+          "Supported deployments, production troubleshooting, and enterprise workflow improvements.",
+        ],
+        actionLabel: "Private Enterprise Work",
         visual: "dashboard",
       },
     ] satisfies Project[],
@@ -248,58 +309,22 @@ const content = {
     ],
     services: [
       {
-        title: "Full-Stack Web App Development",
-        icon: IoCodeSlashOutline,
-        description:
-          "End-to-end product development using modern frontend, backend, and database architecture.",
-      },
-      {
-        title: "Backend API & Database Architecture",
+        title: "Business Systems",
         icon: IoServerOutline,
         description:
-          "REST API development, PostgreSQL-based architecture, Prisma ORM, and scalable data modeling.",
+          "Custom web systems for sales, operations, dashboards, workflows, and internal tools.",
       },
       {
-        title: "Authentication, RBAC & Sessions",
-        icon: IoShieldCheckmarkOutline,
+        title: "Business Website",
+        icon: IoGlobeOutline,
         description:
-          "Role-based access control, authentication flow, session management, OTP, and SSO concepts.",
+          "Company profile websites, landing pages, and professional business presence for small teams and growing businesses.",
       },
       {
-        title: "Enterprise OutSystems Development",
-        icon: IoLayersOutline,
-        description:
-          "Reactive and Traditional Web development, reusable modules, deployment, and production support.",
-      },
-      {
-        title: "Mobile App Development",
-        icon: IoPhonePortraitOutline,
-        description:
-          "Cross-platform mobile features using React Native connected to reliable backend services.",
-      },
-      {
-        title: "AI-Assisted Engineering Workflow",
-        icon: IoSparklesOutline,
-        description:
-          "Faster prototyping, architecture planning, debugging, and technical documentation with AI tooling.",
-      },
-      {
-        title: "System Design & Technical Ownership",
-        icon: IoGitBranchOutline,
-        description:
-          "Translating business ideas into technical workflows, system design, and implementation plans.",
-      },
-      {
-        title: "Deployment & Enterprise Support",
-        icon: IoCloudUploadOutline,
-        description:
-          "Application support, production troubleshooting, migration planning, and release coordination.",
-      },
-      {
-        title: "Automation Development & Testing",
+        title: "Management Systems",
         icon: IoSettingsOutline,
         description:
-          "UiPath automation development, testing support, and workflow efficiency improvements.",
+          "Systems for workshop management, finance tracking, reporting, and operational monitoring.",
       },
     ] satisfies Service[],
     reasons: [
@@ -360,21 +385,24 @@ const content = {
       profileBadge: "Software Engineer",
       heroIntro: "Hi, I'm",
       heroSummary:
-        "Software Engineer with 3+ years of experience in enterprise application development, remote collaboration, and end-to-end system ownership.",
+        "Software Engineer with 3+ years of enterprise OutSystems experience, now building modern full-stack products with Next.js, React, TypeScript, NestJS, PostgreSQL, Prisma, and Supabase.",
+      heroCtaProjects: "View Projects",
+      heroCtaCv: "Download CV",
+      heroCtaContact: "Contact Me",
+      cvUnavailable: "Add the latest CV PDF in public to enable this download.",
       aboutTitle: "About Me",
       aboutBody:
-        "Software Engineer with 3+ years of experience in enterprise application development, remote collaboration, and end-to-end system ownership. Strong background in enterprise software development using OutSystems Reactive and Traditional Web technologies, including authentication systems, reusable modules, deployment management, production troubleshooting, and enterprise workflow implementation. Experienced in translating business ideas into scalable technical solutions, including workflow design, role-based access control (RBAC), authentication flow, database structure, API architecture, and frontend/backend implementation. Currently transitioning into modern AI-assisted full-stack engineering using Next.js, React, TypeScript, React Native, NestJS, PostgreSQL, Prisma, and Supabase while leveraging AI-assisted development workflows to accelerate prototyping, architecture planning, debugging, and technical documentation.",
+        "I build software from business requirements into working systems. My background is enterprise OutSystems development, including authentication, reusable modules, deployment support, production troubleshooting, and workflow implementation for applications used across multiple regions. I am now expanding that foundation into modern full-stack development with Next.js, React, TypeScript, React Native, NestJS, PostgreSQL, Prisma, and Supabase, using AI-assisted workflows for planning, debugging, implementation, and technical documentation.",
       currentFocusTitle: "Current Focus",
       experienceTitle: "Experience",
       skillsTitle: "Skills",
       techStackTitle: "Tech Stack",
-      quote: "Building today what solves tomorrow.",
+
       workLabel: "My Work",
       projectsTitle: "Projects & Platform Work",
       projectsDescription:
-        "Product, architecture, and enterprise work from my CV.",
+        "Selected product builds and enterprise work with role, stack, and delivery context.",
       projectFilters: ["All", "Ongoing", "Architecture", "Enterprise"],
-      progressLabel: "Progress",
       viewDetails: "View Details",
       challengeSubtitle: "Challenge and Join Contest Platform",
       // challengeButton: "View Architecture",
@@ -384,19 +412,19 @@ const content = {
       projectCtaDescription:
         "Enterprise experience, modern full-stack tools, and AI-assisted delivery.",
       projectCtaButton: "Let's Connect",
-      servicesLabel: "What I Do",
-      servicesHeadingAccent: "Engineering",
-      servicesHeadingText: "Work",
-      servicesHeadingLine: "with",
-      servicesHeadingLineAccent: "Business Context",
+      servicesLabel: "Additional Services",
+      servicesHeadingAccent: "Business",
+      servicesHeadingText: "Support",
+      servicesHeadingLine: "through",
+      servicesHeadingLineAccent: "Software",
       servicesIntro:
-        "I help design and build applications that connect business needs with technical implementation: workflows, authentication, databases, APIs, frontend, mobile, deployment, and production support.",
-      capabilitiesTitle: "Core Capabilities",
+        "Software engineering is the main focus. These service areas are available for business owners who need practical systems, websites, or management tools built around real workflows.",
+      capabilitiesTitle: "Service Areas",
       reasonsTitle: "Why Work With Me?",
       credentialsTitle: "Education, Certifications & Languages",
       contactTitle: "Let's build something reliable.",
       contactDescription:
-        "Open to software engineering roles, remote collaboration, and product-focused projects.",
+        "Open to Software Engineer, Full-Stack Developer, and OutSystems Developer roles, plus selected product-focused freelance work.",
       contactLabel: "Get In Touch",
       contactSocialTitle: "Find me online",
       contactSocialDescription:
@@ -483,41 +511,88 @@ const content = {
       },
     ],
     skills: [
-      { name: "OutSystems O11", value: 90 },
-      { name: "TypeScript & JavaScript", value: 82 },
-      { name: "React.js & Next.js", value: 80 },
-      { name: "React Native", value: 70 },
-      { name: "NestJS & REST APIs", value: 74 },
-      { name: "PostgreSQL, Prisma & Supabase", value: 76 },
-      { name: "System Design, RBAC & Autentikasi", value: 78 },
-      { name: "Workflow Development Berbantuan AI", value: 85 },
-    ],
+      {
+        category: "Enterprise & Low-Code",
+        items: [
+          { name: "OutSystems O11", level: "Kuat" },
+          { name: "UiPath", level: "Pengalaman Kerja" },
+        ],
+      },
+      {
+        category: "Frontend",
+        items: [
+          { name: "React", level: "Pengalaman Kerja" },
+          { name: "Next.js", level: "Pengalaman Kerja" },
+          { name: "TypeScript", level: "Pengalaman Kerja" },
+          { name: "React Native", level: "Pengalaman Kerja" },
+          { name: "Tailwind CSS", level: "Pengalaman Kerja" },
+        ],
+      },
+      {
+        category: "Backend & Database",
+        items: [
+          { name: "NestJS", level: "Pengalaman Kerja" },
+          { name: "REST API", level: "Pengalaman Kerja" },
+          { name: "PostgreSQL", level: "Pengalaman Kerja" },
+          { name: "Prisma", level: "Pengalaman Kerja" },
+          { name: "Supabase", level: "Pengalaman Kerja" },
+        ],
+      },
+      {
+        category: "Architecture & Workflow",
+        items: [
+          { name: "RBAC", level: "Kuat" },
+          { name: "System Design", level: "Pengalaman Kerja" },
+          { name: "Database Design", level: "Pengalaman Kerja" },
+          { name: "AI-assisted Development", level: "Kuat" },
+          { name: "Technical Documentation", level: "Kuat" },
+        ],
+      },
+    ] satisfies SkillGroup[],
     projects: [
       {
         title: "Personal Finance App",
         status: "Berjalan",
-        description:
-          "Platform keuangan pribadi berbasis subscription dengan autentikasi, pencatatan transaksi, dan arsitektur database yang scalable.",
-        tags: ["Next.js", "TypeScript", "Prisma", "Supabase", "Auth"],
-        progress: 62,
+        context:
+          "Platform keuangan pribadi berbasis subscription untuk pencatatan transaksi, manajemen kategori dan bank, dashboard insight, dan struktur data yang scalable.",
+        role: "Full-stack developer dan product owner",
+        stack: ["Next.js", "TypeScript", "Prisma", "Supabase", "Auth"],
+        responsibilities: [
+          "Membangun autentikasi, workflow transaksi, manajemen kategori dan bank, serta struktur dashboard.",
+          "Merancang struktur database untuk mendukung pertumbuhan produk subscription.",
+          "Merencanakan integrasi mobile React Native untuk fase produk berikutnya.",
+        ],
+        actionLabel: "Private Project",
         visual: "finance",
       },
       {
         title: "Inspire Robotics Challenges Platform",
-        status: "Arsitektur",
-        description:
-          "Arsitektur platform challenge dan investment management end-to-end dengan RBAC, authentication flow, dan transaction lifecycle.",
-        tags: ["System Design", "RBAC", "Auth", "Frontend", "Backend"],
-        progress: 78,
+        status: "Platform Build",
+        context:
+          "Platform challenge dan investment management untuk lifecycle kompetisi, registrasi tim, dan operasional admin/user.",
+        role: "Full-stack engineer dengan workflow perencanaan berbantuan AI",
+        stack: ["Next.js", "TypeScript", "RBAC", "Auth", "Dashboard"],
+        responsibilities: [
+          "Mengimplementasikan authentication flow, role-based access control, challenge lifecycle, dan team registration flow.",
+          "Membangun fondasi dashboard admin dan user dalam timeline delivery yang cepat.",
+          "Menggunakan workflow berbantuan AI untuk mempercepat proses dari requirement menjadi fitur berjalan.",
+        ],
+        actionLabel: "Case Study Coming Soon",
         visual: "challenge",
       },
       {
-        title: "Enterprise OTP & SSO Modules",
+        title: "Enterprise OutSystems Work",
         status: "Enterprise",
-        description:
-          "Reusable authentication modules dan proof-of-concepts SSO untuk aplikasi enterprise berbasis workflow OutSystems.",
-        tags: ["OutSystems O11", "SSO", "OTP", "Enterprise Apps"],
-        progress: 100,
+        context:
+          "Support dan enhancement aplikasi enterprise yang digunakan di Singapore, Indonesia, Malaysia, Europe, Africa, dan USA.",
+        role: "Enterprise OutSystems Developer",
+        stack: ["OutSystems O11", "Reactive Web", "Traditional Web", "OTP", "SSO"],
+        responsibilities: [
+          "Melakukan maintenance dan support untuk 8 aplikasi enterprise lintas business unit global.",
+          "Membangun reusable OTP module dan mengembangkan SSO proof-of-concept.",
+          "Mendukung deployment, production troubleshooting, dan peningkatan workflow enterprise.",
+        ],
+        actionLabel: "Private Enterprise Work",
         visual: "dashboard",
       },
     ] satisfies Project[],
@@ -545,58 +620,22 @@ const content = {
     ],
     services: [
       {
-        title: "Pengembangan Web App Full-Stack",
-        icon: IoCodeSlashOutline,
-        description:
-          "Pengembangan produk end-to-end menggunakan frontend, backend, dan arsitektur database modern.",
-      },
-      {
-        title: "Backend API & Arsitektur Database",
+        title: "Sistem Bisnis",
         icon: IoServerOutline,
         description:
-          "REST API development, arsitektur berbasis PostgreSQL, Prisma ORM, dan data modeling yang scalable.",
+          "Sistem web custom untuk sales, operasional, dashboard, workflow, dan internal tools.",
       },
       {
-        title: "Autentikasi, RBAC & Sessions",
-        icon: IoShieldCheckmarkOutline,
+        title: "Website Bisnis",
+        icon: IoGlobeOutline,
         description:
-          "Role-based access control, authentication flow, session management, OTP, dan konsep SSO.",
+          "Company profile, landing page, dan presence bisnis profesional untuk tim kecil dan bisnis berkembang.",
       },
       {
-        title: "Enterprise OutSystems Development",
-        icon: IoLayersOutline,
-        description:
-          "Pengembangan Reactive dan Traditional Web, reusable modules, deployment, dan production support.",
-      },
-      {
-        title: "Pengembangan Mobile App",
-        icon: IoPhonePortraitOutline,
-        description:
-          "Fitur mobile cross-platform menggunakan React Native yang terhubung dengan backend yang reliable.",
-      },
-      {
-        title: "AI-Assisted Engineering Workflow",
-        icon: IoSparklesOutline,
-        description:
-          "Prototyping, perencanaan arsitektur, debugging, dan dokumentasi teknis yang lebih cepat dengan AI tooling.",
-      },
-      {
-        title: "System Design & Technical Ownership",
-        icon: IoGitBranchOutline,
-        description:
-          "Menerjemahkan ide bisnis menjadi workflow teknis, system design, dan rencana implementasi.",
-      },
-      {
-        title: "Deployment & Enterprise Support",
-        icon: IoCloudUploadOutline,
-        description:
-          "Application support, production troubleshooting, perencanaan migrasi, dan koordinasi release.",
-      },
-      {
-        title: "Automation Development & Testing",
+        title: "Sistem Manajemen",
         icon: IoSettingsOutline,
         description:
-          "UiPath automation development, testing support, dan peningkatan efisiensi workflow.",
+          "Sistem untuk manajemen bengkel, pencatatan keuangan, reporting, dan monitoring operasional.",
       },
     ] satisfies Service[],
     reasons: [
@@ -657,21 +696,24 @@ const content = {
       profileBadge: "Software Engineer",
       heroIntro: "Halo, saya",
       heroSummary:
-        "Software Engineer dengan pengalaman 3+ tahun dalam pengembangan aplikasi enterprise, kolaborasi remote, dan kepemilikan sistem end-to-end.",
+        "Software Engineer dengan pengalaman 3+ tahun di enterprise OutSystems, sekarang membangun produk full-stack modern dengan Next.js, React, TypeScript, NestJS, PostgreSQL, Prisma, dan Supabase.",
+      heroCtaProjects: "Lihat Proyek",
+      heroCtaCv: "Download CV",
+      heroCtaContact: "Hubungi Saya",
+      cvUnavailable: "Tambahkan file CV PDF terbaru di public untuk mengaktifkan download.",
       aboutTitle: "Tentang Saya",
       aboutBody:
-        "Software Engineer dengan pengalaman 3+ tahun dalam pengembangan aplikasi enterprise, kolaborasi remote, dan kepemilikan sistem end-to-end. Memiliki latar belakang kuat dalam pengembangan software enterprise menggunakan OutSystems Reactive dan Traditional Web, termasuk sistem autentikasi, reusable modules, deployment management, production troubleshooting, dan implementasi workflow enterprise. Terbiasa menerjemahkan ide bisnis menjadi solusi teknis yang scalable, termasuk workflow design, role-based access control (RBAC), authentication flow, struktur database, arsitektur API, dan implementasi frontend/backend. Saat ini bertransisi ke modern AI-assisted full-stack engineering menggunakan Next.js, React, TypeScript, React Native, NestJS, PostgreSQL, Prisma, dan Supabase dengan memanfaatkan workflow berbantuan AI untuk mempercepat prototyping, perencanaan arsitektur, debugging, dan dokumentasi teknis.",
+        "Saya membangun software dari kebutuhan bisnis menjadi sistem yang berjalan. Latar belakang saya adalah enterprise OutSystems development, termasuk autentikasi, reusable modules, deployment support, production troubleshooting, dan implementasi workflow untuk aplikasi yang digunakan di berbagai region. Saat ini saya memperluas fondasi tersebut ke modern full-stack development dengan Next.js, React, TypeScript, React Native, NestJS, PostgreSQL, Prisma, dan Supabase, menggunakan workflow berbantuan AI untuk planning, debugging, implementasi, dan dokumentasi teknis.",
       currentFocusTitle: "Fokus Saat Ini",
       experienceTitle: "Pengalaman",
       skillsTitle: "Keahlian",
       techStackTitle: "Tech Stack",
-      quote: "Membangun hari ini untuk solusi esok hari.",
+
       workLabel: "Karya Saya",
       projectsTitle: "Proyek & Platform Work",
       projectsDescription:
-        "Produk, arsitektur, dan pengalaman enterprise dari CV saya.",
+        "Pilihan product build dan enterprise work dengan role, stack, dan konteks delivery.",
       projectFilters: ["Semua", "Berjalan", "Arsitektur", "Enterprise"],
-      progressLabel: "Progress",
       viewDetails: "Lihat Detail",
       challengeSubtitle: "Platform challenge dan investment",
       // challengeButton: "Lihat Arsitektur",
@@ -681,19 +723,19 @@ const content = {
       projectCtaDescription:
         "Pengalaman enterprise, modern full-stack tools, dan delivery berbantuan AI.",
       projectCtaButton: "Hubungi Saya",
-      servicesLabel: "Yang Saya Kerjakan",
-      servicesHeadingAccent: "Engineering",
-      servicesHeadingText: "Work",
-      servicesHeadingLine: "dengan",
-      servicesHeadingLineAccent: "Konteks Bisnis",
+      servicesLabel: "Layanan Tambahan",
+      servicesHeadingAccent: "Dukungan",
+      servicesHeadingText: "Bisnis",
+      servicesHeadingLine: "melalui",
+      servicesHeadingLineAccent: "Software",
       servicesIntro:
-        "Saya membantu merancang dan membangun aplikasi yang menghubungkan kebutuhan bisnis dengan implementasi teknis: workflow, autentikasi, database, API, frontend, mobile, deployment, dan support produksi.",
-      capabilitiesTitle: "Core Capabilities",
+        "Fokus utama saya tetap software engineering. Area layanan ini tersedia untuk pemilik bisnis yang membutuhkan sistem praktis, website, atau tools manajemen berdasarkan workflow nyata.",
+      capabilitiesTitle: "Area Layanan",
       reasonsTitle: "Kenapa Bekerja Dengan Saya?",
       credentialsTitle: "Pendidikan, Sertifikasi & Bahasa",
       contactTitle: "Mari bangun sesuatu yang reliable.",
       contactDescription:
-        "Terbuka untuk role software engineering, kolaborasi remote, dan project berbasis produk.",
+        "Terbuka untuk role Software Engineer, Full-Stack Developer, dan OutSystems Developer, serta freelance product-focused terpilih.",
       contactLabel: "Hubungi Saya",
       contactSocialTitle: "Temukan saya di",
       contactSocialDescription:
@@ -762,7 +804,7 @@ const sectionShell =
 
 const sectionContent = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 const contactInputClass =
-  "mt-2 w-full rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-emerald-400/70 focus:bg-black/40 focus:ring-4 focus:ring-emerald-400/10";
+  "mt-2 w-full rounded-lg border border-white/10 bg-bold/25 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 hover:border-white/20 focus:border-emerald-400/70 focus:bg-bold/40 focus:ring-4 focus:ring-emerald-400/10";
 
 
 function ProfileVisual({ label }: { label: string }) {
@@ -776,37 +818,14 @@ function ProfileVisual({ label }: { label: string }) {
         sizes="(min-width: 1024px) 384px, 80vw"
         className="object-cover"
       />
-      <div className="absolute right-6 top-6 rounded-md border border-emerald-400/20 bg-black/50 px-3 py-2 text-[10px] font-semibold text-emerald-300 backdrop-blur">
+      <div className="absolute right-6 top-6 rounded-md border border-emerald-400/20 bg-bold/50 px-3 py-2 text-[10px] font-semibold text-emerald-300 backdrop-blur">
         {label}
       </div>
     </div>
   );
 }
 
-function ProgressRing({ value }: { value: number }) {
-  return (
-    <div
-      className="grid h-32 w-32 place-items-center rounded-full p-2.5 shadow-[0_0_32px_rgba(87,157,255,0.16)]"
-      style={{
-        background: `conic-gradient(#579dff ${value * 3.6}deg, rgba(27,44,64,0.9) 0deg)`,
-      }}
-    >
-      <div className="grid h-full w-full place-items-center rounded-full bg-slate-950 text-2xl font-bold text-white">
-        {value}%
-      </div>
-    </div>
-  );
-}
-
-function ProjectCard({
-  project,
-  labels,
-}: {
-  project: Project;
-  labels: {
-    progressLabel: string;
-  };
-}) {
+function ProjectCard({ project }: { project: Project }) {
   const ProjectIcon =
     project.visual === "challenge"
       ? IoTrophyOutline
@@ -835,29 +854,62 @@ function ProjectCard({
         <Badge>{project.status}</Badge>
       </div>
 
-      <h3 className="mt-5 text-xl font-bold leading-tight text-white">
+      <h3 className="mt-5 text-xl font-semibold leading-tight text-white">
         {project.title}
       </h3>
       <p className="mt-3 text-sm leading-6 text-slate-400">
-        {project.description}
+        {project.context}
       </p>
 
-      <div className="my-8 flex flex-col items-center">
-        <ProgressRing value={project.progress} />
-        <p className="mt-3 text-xs font-medium uppercase tracking-[0.16em] text-slate-500">
-          {labels.progressLabel}
+      <div className="mt-5 rounded-md border border-white/10 bg-bold/20 p-4">
+        <p className="text-[11px] font-semibold uppercase text-emerald-300">
+          Role
+        </p>
+        <p className="mt-2 text-sm font-semibold leading-6 text-white">
+          {project.role}
         </p>
       </div>
 
-      <div className="mt-auto flex flex-wrap gap-2">
-        {project.tags.map((tag) => (
+      <ul className="mt-5 list-disc space-y-2 pl-5 marker:text-emerald-400">
+        {project.responsibilities.map((item) => (
+          <li key={item} className="pl-1 text-sm leading-6 text-slate-300">
+            {item}
+          </li>
+        ))}
+      </ul>
+
+      <p className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+        Tech Stack
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {project.stack.map((tag) => (
           <span
             key={tag}
-            className="rounded border border-white/10 bg-black/20 px-2.5 py-1 text-[11px] font-medium text-slate-300"
+            className="rounded border border-white/10 bg-bold/20 px-2.5 py-1 text-[11px] font-medium text-slate-300"
           >
             {tag}
           </span>
         ))}
+      </div>
+
+      <div className="mt-auto pt-6">
+        {project.actionHref ? (
+          <a
+            href={project.actionHref}
+            className="inline-flex items-center gap-2 rounded-md border border-emerald-400/60 px-4 py-2 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-slate-950"
+          >
+            <IoRocketOutline aria-hidden="true" />
+            {project.actionLabel}
+          </a>
+        ) : (
+          <span
+            aria-disabled="true"
+            className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-slate-400"
+          >
+            <IoLockClosedOutline aria-hidden="true" />
+            {project.actionLabel}
+          </span>
+        )}
       </div>
     </article>
   );
@@ -924,7 +976,7 @@ function ServiceCard({ service }: { service: Service }) {
       <span className="grid h-10 w-10 place-items-center rounded-md border border-emerald-400/25 bg-emerald-400/10 text-xl text-emerald-300">
         <Icon aria-hidden="true" />
       </span>
-      <h3 className="mt-4 text-base font-bold text-white">{service.title}</h3>
+      <h3 className="mt-4 text-base font-semibold text-white">{service.title}</h3>
       <p className="mt-3 text-sm leading-6 text-slate-400">
         {service.description}
       </p>
@@ -941,7 +993,7 @@ function Sosmed({ item }: { item: Social }) {
       aria-label={item.label}
       target={item.external ? "_blank" : undefined}
       rel={item.external ? "noreferrer" : undefined}
-      className="grid h-9 w-9 place-items-center rounded-md border border-white/10 bg-black/30 text-xl font-bold text-slate-300 transition hover:border-emerald-400/40 hover:text-emerald-300"
+      className="grid h-9 w-9 place-items-center rounded-md border border-white/10 bg-bold/30 text-xl font-semibold text-slate-300 transition hover:border-emerald-400/40 hover:text-emerald-300"
     >
       <Icon />
     </a>
@@ -954,7 +1006,7 @@ function Footer({ rights }: { rights: string }) {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-4 sm:px-6 md:flex-row lg:px-8">
         <a
           href="#about"
-          className="text-3xl font-black tracking-tight text-emerald-400"
+          className="text-3xl font-bold tracking-tight text-emerald-400"
         >
           MP
         </a>
@@ -977,9 +1029,7 @@ export default function Home() {
     "idle" | "sending" | "sent" | "error"
   >("idle");
   const copy = content[language];
-  const projectLabels = {
-    progressLabel: copy.ui.progressLabel,
-  };
+
   const contactCopy =
     language === "id"
       ? {
@@ -1053,7 +1103,31 @@ export default function Home() {
               <p className="mt-6 max-w-xl text-base leading-8 text-slate-300">
                 {copy.ui.heroSummary}
               </p>
-              <div className="mt-7 flex gap-3">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a
+                  href="#projects"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-950/30 transition hover:bg-emerald-300"
+                >
+                  <IoBriefcaseOutline aria-hidden="true" />
+                  {copy.ui.heroCtaProjects}
+                </a>
+                <a
+                  href="/assets/CV%20-%20Murtamad%20Pratama.pdf"
+                  download="CV - Murtamad Pratama.pdf"
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-white/10 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-emerald-400/60 hover:bg-emerald-400/10 hover:text-emerald-300"
+                >
+                  <IoCloudUploadOutline aria-hidden="true" />
+                  {copy.ui.heroCtaCv}
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center justify-center gap-2 rounded-md border border-emerald-400/60 px-5 py-3 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-slate-950"
+                >
+                  <IoMailOutline aria-hidden="true" />
+                  {copy.ui.heroCtaContact}
+                </a>
+              </div>
+              <div className="mt-6 flex gap-3">
                 {socialLinks.map((item) => (
                   <Sosmed key={item.label} item={item} />
                 ))}
@@ -1062,7 +1136,7 @@ export default function Home() {
             <ProfileVisual label={copy.ui.profileBadge} />
           </div>
 
-          <div className="mt-10 grid gap-4 rounded-lg border border-white/10 bg-slate-950/60 p-5 shadow-xl shadow-black/20 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-4 rounded-lg border border-white/10 bg-slate-950/60 p-5 shadow-xl shadow-bold/20 sm:grid-cols-2 lg:grid-cols-4">
             {copy.heroStats.map((stat) => (
               <MetricCard key={stat.label} {...stat} />
             ))}
@@ -1070,7 +1144,7 @@ export default function Home() {
 
           <div className="mt-10 grid gap-7 lg:grid-cols-[1.25fr_0.85fr]">
             <div className="rounded-lg border border-white/10 bg-slate-950/65 p-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-semibold text-white">
                 {copy.ui.aboutTitle}
               </h2>
               <p className="mt-5 text-sm leading-7 text-slate-300">
@@ -1078,7 +1152,7 @@ export default function Home() {
               </p>
             </div>
             <div className="rounded-lg border border-emerald-400/20 bg-slate-950/65 p-6">
-              <h2 className="text-xl font-bold text-white">
+              <h2 className="text-xl font-semibold text-white">
                 {copy.ui.currentFocusTitle}
               </h2>
               <ul className="mt-5 space-y-3">
@@ -1097,7 +1171,7 @@ export default function Home() {
 
           <div className="mt-7 grid gap-7 lg:grid-cols-[1.35fr_0.75fr]">
             <div className="rounded-lg border border-white/10 bg-slate-950/65 p-6">
-              <h2 className="flex items-center gap-3 text-2xl font-bold text-white">
+              <h2 className="flex items-center gap-3 text-2xl font-semibold text-white">
                 <span className="grid h-9 w-9 place-items-center rounded-md border border-emerald-400/25 bg-emerald-400/10 text-lg text-emerald-300">
                   <IoBriefcaseOutline aria-hidden="true" />
                 </span>
@@ -1112,80 +1186,82 @@ export default function Home() {
                     <span className="absolute -left-[7px] top-1 h-3.5 w-3.5 rounded-full bg-emerald-400 shadow-[0_0_0_6px_rgba(87,157,255,0.12)]" />
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <h3 className="font-bold text-white">{item.role}</h3>
+                        <h3 className="font-semibold text-white">{item.role}</h3>
                         <p className="mt-1 text-sm text-slate-400">
                           {item.type}
                         </p>
                       </div>
                       <p className="text-sm text-slate-400">{item.period}</p>
                     </div>
-                    <ul className="mt-4 space-y-2">
+                    <ul className="mt-4 list-disc space-y-2 pl-5 marker:text-emerald-400">
                       {item.details.map((detail) => (
                         <li
                           key={detail}
-                          className="text-sm leading-6 text-slate-400"
+                          className="pl-1 text-sm leading-6 text-slate-400"
                         >
-                          - {detail}
+                          {detail}
                         </li>
                       ))}
                     </ul>
                   </div>
                 ))}
               </div>
-            </div>
 
-            <div className="space-y-7">
-              <div className="rounded-lg border border-white/10 bg-slate-950/65 p-6">
-                <h2 className="text-xl font-bold text-white">
-                  {copy.ui.skillsTitle}
-                </h2>
-                <div className="mt-5 space-y-4">
-                  {copy.skills.map((skill) => (
-                    <div key={skill.name}>
-                      <div className="mb-2 flex items-center justify-between text-sm">
-                        <span className="text-slate-300">{skill.name}</span>
-                        <span className="font-semibold text-white">
-                          {skill.value}%
-                        </span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-slate-800">
-                        <div
-                          className="h-full rounded-full bg-emerald-400"
-                          style={{ width: `${skill.value}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-lg border border-white/10 bg-slate-950/65 p-6">
-                <h2 className="text-xl font-bold text-white">
+              <div className="mt-8 border-t border-white/10 pt-6">
+                <h2 className="text-xl font-semibold text-white">
                   {copy.ui.techStackTitle}
                 </h2>
-                <div className="mt-5 grid grid-cols-5 gap-3">
+                <div className="mt-5 grid grid-cols-5 gap-3 sm:grid-cols-10 lg:grid-cols-5 xl:grid-cols-10">
                   {techStack.map(({ label, icon: Icon }) => (
                     <span
                       key={label}
                       title={label}
                       aria-label={label}
-                      className="flex h-14 flex-col items-center justify-center gap-1 rounded-md border border-white/10 bg-black/40 text-emerald-300"
+                      className="flex h-14 flex-col items-center justify-center gap-1 rounded-md border border-white/10 bg-bold/40 text-emerald-300"
                     >
                       <Icon className="text-2xl" aria-hidden="true" />
-                      <span className="text-[10px] font-bold text-slate-400">
+                      <span className="text-[10px] font-semibold text-slate-400">
                         {label}
                       </span>
                     </span>
                   ))}
                 </div>
               </div>
+            </div>
 
-              <div className="rounded-lg border border-white/10 bg-slate-950/65 p-6 text-center">
-                <p className="text-5xl font-black text-emerald-400">&quot;</p>
-                <p className="mx-auto max-w-xs text-2xl font-semibold leading-snug text-white">
-                  {copy.ui.quote}
-                </p>
+            <div className="space-y-7">
+              <div className="rounded-lg border border-white/10 bg-slate-950/65 p-6">
+                <h2 className="text-xl font-semibold text-white">
+                  {copy.ui.skillsTitle}
+                </h2>
+                <div className="mt-5 space-y-5">
+                  {copy.skills.map((group) => (
+                    <div
+                      key={group.category}
+                      className="border-b border-white/10 pb-5 last:border-b-0 last:pb-0"
+                    >
+                      <h3 className="text-sm font-semibold text-white">
+                        {group.category}
+                      </h3>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {group.items.map((skill) => (
+                          <span
+                            key={skill.name}
+                            className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-bold/25 px-3 py-2 text-xs text-slate-300"
+                          >
+                            <span>{skill.name}</span>
+                            <span className="rounded bg-emerald-400/10 px-2 py-0.5 font-semibold text-emerald-300">
+                              {skill.level}
+                            </span>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
+
+
             </div>
           </div>
           </div>
@@ -1206,25 +1282,21 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mt-8 grid divide-y divide-white/10 overflow-hidden rounded-xl border border-white/15 bg-slate-950/65 shadow-2xl shadow-black/30 md:grid-cols-3 md:divide-x md:divide-y-0 md:divide-white/10">
+          <div className="mt-8 grid divide-y divide-white/10 overflow-hidden rounded-xl border border-white/15 bg-slate-950/65 shadow-2xl shadow-bold/30 md:grid-cols-3 md:divide-x md:divide-y-0 md:divide-white/10">
             {copy.projects.map((project) => (
-              <ProjectCard
-                key={project.title}
-                labels={projectLabels}
-                project={project}
-              />
+              <ProjectCard key={project.title} project={project} />
             ))}
           </div>
 
           <div className="mt-7 rounded-lg border border-white/10 bg-slate-950/65 p-6">
-            <h3 className="text-2xl font-bold text-white">
+            <h3 className="text-2xl font-semibold text-white">
               {copy.ui.careerHighlightsTitle}
             </h3>
             <div className="mt-8 grid gap-6 md:grid-cols-4">
               {copy.roadmap.map((item) => (
                 <div key={item.quarter} className="relative">
                   <span className="mb-4 block h-4 w-4 rounded-full bg-emerald-400 shadow-[0_0_0_8px_rgba(87,157,255,0.10)]" />
-                  <p className="font-bold text-emerald-300">{item.quarter}</p>
+                  <p className="font-semibold text-emerald-300">{item.quarter}</p>
                   <p className="mt-2 text-sm leading-6 text-slate-300">
                     {item.title}
                   </p>
@@ -1239,7 +1311,7 @@ export default function Home() {
                 <IoRocketOutline aria-hidden="true" />
               </span>
               <div>
-                <p className="text-lg font-bold text-white">
+                <p className="text-lg font-semibold text-white">
                   {copy.ui.projectCtaTitle}
                 </p>
                 <p className="mt-1 text-sm text-slate-400">
@@ -1249,7 +1321,7 @@ export default function Home() {
             </div>
             <a
               href="#contact"
-              className="rounded-md border border-emerald-400/60 px-6 py-3 text-sm font-bold text-emerald-300 transition hover:bg-emerald-400 hover:text-slate-950"
+              className="rounded-md border border-emerald-400/60 px-6 py-3 text-sm font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-slate-950"
             >
               {copy.ui.projectCtaButton}
             </a>
@@ -1285,7 +1357,7 @@ export default function Home() {
           </div>
 
           <div className="mt-10 rounded-lg border border-white/10 bg-slate-950/65 p-6">
-            <h3 className="text-2xl font-bold text-white">
+            <h3 className="text-2xl font-semibold text-white">
               {copy.ui.capabilitiesTitle}
             </h3>
             <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -1296,7 +1368,7 @@ export default function Home() {
           </div>
 
           <div className="mt-7 rounded-lg border border-white/10 bg-slate-950/65 p-6">
-            <h3 className="text-2xl font-bold text-white">
+            <h3 className="text-2xl font-semibold text-white">
               {copy.ui.reasonsTitle}
             </h3>
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -1306,12 +1378,12 @@ export default function Home() {
                 return (
                   <div
                     key={reason.title}
-                    className="rounded-lg border border-white/10 bg-black/30 p-5 text-center"
+                    className="rounded-lg border border-white/10 bg-bold/30 p-5 text-center"
                   >
                     <span className="mx-auto mb-4 grid h-10 w-10 place-items-center rounded-md border border-emerald-400/25 bg-emerald-400/10 text-xl text-emerald-300">
                       <Icon aria-hidden="true" />
                     </span>
-                    <p className="font-bold text-white">{reason.title}</p>
+                    <p className="font-semibold text-white">{reason.title}</p>
                     <p className="mt-1 text-xs text-slate-400">
                       {reason.subtitle}
                     </p>
@@ -1322,29 +1394,29 @@ export default function Home() {
           </div>
 
           <div className="mt-7 rounded-lg border border-white/10 bg-slate-950/65 p-6">
-            <h3 className="text-2xl font-bold text-white">
+            <h3 className="text-2xl font-semibold text-white">
               {copy.ui.credentialsTitle}
             </h3>
             <div className="mt-6 grid gap-5 lg:grid-cols-3">
               {copy.credentials.map((item) => (
                 <article
                   key={item.name}
-                  className="rounded-lg border border-white/10 bg-black/25 p-6"
+                  className="rounded-lg border border-white/10 bg-bold/25 p-6"
                 >
-                  <h4 className="text-xl font-bold text-white">{item.name}</h4>
+                  <h4 className="text-xl font-semibold text-white">{item.name}</h4>
                   <p className="mt-3 text-lg font-extrabold text-white">
                     {item.title}
                   </p>
                   <p className="mt-2 text-sm leading-6 text-slate-400">
                     {item.meta}
                   </p>
-                  <ul className="mt-5 space-y-3">
+                  <ul className="mt-5 list-disc space-y-3 pl-5 marker:text-emerald-400">
                     {item.features.map((feature) => (
                       <li
                         key={feature}
-                        className="text-sm leading-6 text-slate-300"
+                        className="pl-1 text-sm leading-6 text-slate-300"
                       >
-                        - {feature}
+                        {feature}
                       </li>
                     ))}
                   </ul>
@@ -1360,7 +1432,7 @@ export default function Home() {
           className={`${sectionShell} flex items-center bg-[linear-gradient(180deg,rgba(7,26,43,0.98),rgba(6,21,35,0.99))]`}
         >
           <div className={sectionContent}>
-            <div className="relative overflow-hidden rounded-2xl border border-emerald-400/20 bg-[linear-gradient(135deg,rgba(87,157,255,0.12),rgba(10,31,51,0.95)_48%,rgba(6,21,35,0.99))] p-6 shadow-2xl shadow-black/30 md:p-10">
+            <div className="relative overflow-hidden rounded-2xl border border-emerald-400/20 bg-[linear-gradient(135deg,rgba(87,157,255,0.12),rgba(10,31,51,0.95)_48%,rgba(6,21,35,0.99))] p-6 shadow-2xl shadow-bold/30 md:p-10">
               <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />
               <div className="pointer-events-none absolute -bottom-32 left-1/3 h-64 w-64 rounded-full bg-teal-400/10 blur-3xl" />
 
@@ -1375,7 +1447,7 @@ export default function Home() {
                   </p>
 
                   <div className="mt-9">
-                    <h3 className="font-bold text-white">
+                    <h3 className="font-semibold text-white">
                       {copy.ui.contactSocialTitle}
                     </h3>
                     <p className="mt-2 text-sm leading-6 text-slate-400">
@@ -1391,7 +1463,7 @@ export default function Home() {
                             href={item.href}
                             target={item.external ? "_blank" : undefined}
                             rel={item.external ? "noreferrer" : undefined}
-                            className="group flex items-center gap-3 rounded-xl border border-white/10 bg-black/25 p-3.5 transition hover:-translate-y-0.5 hover:border-emerald-400/40 hover:bg-emerald-400/10"
+                            className="group flex items-center gap-3 rounded-xl border border-white/10 bg-bold/25 p-3.5 transition hover:-translate-y-0.5 hover:border-emerald-400/40 hover:bg-emerald-400/10"
                           >
                             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg border border-emerald-400/20 bg-emerald-400/10 text-xl text-emerald-300 transition group-hover:bg-emerald-400 group-hover:text-slate-950">
                               <Icon aria-hidden="true" />
@@ -1413,9 +1485,9 @@ export default function Home() {
 
                 <form
                   onSubmit={handleContactSubmit}
-                  className="rounded-xl border border-white/10 bg-slate-950/70 p-5 shadow-xl shadow-black/20 backdrop-blur-sm sm:p-7"
+                  className="rounded-xl border border-white/10 bg-slate-950/70 p-5 shadow-xl shadow-bold/20 backdrop-blur-sm sm:p-7"
                 >
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="text-xl font-semibold text-white">
                     {copy.ui.contactFormTitle}
                   </h3>
 
