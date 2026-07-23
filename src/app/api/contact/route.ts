@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
 
   if (!from || !CONTACT_EMAIL) {
     return NextResponse.json(
-      { error: "RESEND_FROM is not configured." },
+      { error: "Contact email is not configured." },
       { status: 500 },
     );
   }
