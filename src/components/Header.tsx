@@ -24,12 +24,13 @@ export default function Header({
     <header className="fixed inset-x-0 top-0 z-[100] border-b border-white/10 bg-[#061523]/90 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <a
-          href="#about"
+          href="#home"
+          aria-label="Murtamad Pratama - home"
           className="text-3xl font-black tracking-tight text-white"
         >
           MP
         </a>
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-6 lg:flex">
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -44,6 +45,7 @@ export default function Header({
         <div className="flex items-center gap-2">
           <div
             aria-label="Language selector"
+            role="group"
             className="grid grid-cols-2 rounded-md border border-white/10 bg-slate-950/70 p-1"
           >
             {languageOptions.map((item) => {

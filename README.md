@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Resume assets
+
+Before deploying, place the two final, recruiter-reviewed PDF files at:
+
+- `public/assets/Murtamad-Pratama-Full-Stack-Resume.pdf`
+- `public/assets/Murtamad-Pratama-OutSystems-Resume.pdf`
+
+The portfolio intentionally does not generate placeholder resume content.
+
 ## Getting Started
 
 First, run the development server:
