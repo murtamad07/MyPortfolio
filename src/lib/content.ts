@@ -26,6 +26,7 @@ export type Project = {
   responsibilities: string[];
   actionLabel: string;
   actionHref?: string;
+  liveUrl?: string;
   visual: string;
 };
 
@@ -215,6 +216,30 @@ export const content = {
     ] satisfies SkillGroup[],
     projects: [
       {
+        title: "Personal Finance Application",
+        status: "Completed · Personal Use",
+        context:
+          "A completed personal finance web and mobile application used privately to manage accounts, categories, transactions, and dashboard reporting.",
+        role: "Full-Stack Developer",
+        stack: [
+          "Next.js",
+          "React Native",
+          "TypeScript",
+          "Prisma",
+          "Supabase",
+          "PostgreSQL",
+        ],
+        responsibilities: [
+          "Built authenticated web and React Native experiences for accounts, categories, and transactions.",
+          "Designed the relational data structure and dashboard reporting for financial records.",
+          "Completed the product for private personal use; commercial features and public onboarding are outside the current scope.",
+        ],
+        actionLabel: "View Case Study",
+        actionHref: "/projects/personal-finance-application",
+        liveUrl: "https://finance.murtamadpratama.my.id",
+        visual: "finance",
+      },
+      {
         title: "Protected Digital Product Platform",
         status: "Private Project",
         context:
@@ -252,22 +277,6 @@ export const content = {
         actionLabel: "View Case Study",
         actionHref: "/projects/inspire-robotics-challenge-platform",
         visual: "challenge",
-      },
-      {
-        title: "Personal Finance Application",
-        status: "Ongoing",
-        context:
-          "Organizes accounts, categories, transactions, and dashboard reporting in one relational system.",
-        role: "Full-Stack Developer",
-        stack: ["Next.js", "TypeScript", "Prisma", "Supabase", "PostgreSQL"],
-        responsibilities: [
-          "Built authentication, accounts, categories, transactions, API routes, and dashboard reporting.",
-          "Designed the relational data structure for financial records.",
-          "React Native integration remains a possible future phase.",
-        ],
-        actionLabel: "View Case Study",
-        actionHref: "/projects/personal-finance-application",
-        visual: "finance",
       },
     ] satisfies Project[],
     roadmap: [
@@ -536,6 +545,30 @@ export const content = {
     ] satisfies SkillGroup[],
     projects: [
       {
+        title: "Personal Finance Application",
+        status: "Selesai · Digunakan Pribadi",
+        context:
+          "Aplikasi keuangan pribadi berbasis web dan mobile yang telah selesai dan digunakan secara privat untuk mengelola akun, kategori, transaksi, dan laporan dashboard.",
+        role: "Full-Stack Developer",
+        stack: [
+          "Next.js",
+          "React Native",
+          "TypeScript",
+          "Prisma",
+          "Supabase",
+          "PostgreSQL",
+        ],
+        responsibilities: [
+          "Membangun pengalaman web dan React Native terautentikasi untuk akun, kategori, dan transaksi.",
+          "Merancang struktur data relasional dan laporan dashboard untuk catatan keuangan.",
+          "Menyelesaikan produk untuk penggunaan pribadi; fitur komersial dan onboarding publik berada di luar scope saat ini.",
+        ],
+        actionLabel: "Lihat Studi Kasus",
+        actionHref: "/projects/personal-finance-application",
+        liveUrl: "https://finance.murtamadpratama.my.id",
+        visual: "finance",
+      },
+      {
         title: "Protected Digital Product Platform",
         status: "Proyek Privat",
         context:
@@ -573,22 +606,6 @@ export const content = {
         actionLabel: "Lihat Studi Kasus",
         actionHref: "/projects/inspire-robotics-challenge-platform",
         visual: "challenge",
-      },
-      {
-        title: "Personal Finance Application",
-        status: "Berjalan",
-        context:
-          "Mengelola akun, kategori, transaksi, dan laporan dashboard dalam satu sistem relasional.",
-        role: "Full-Stack Developer",
-        stack: ["Next.js", "TypeScript", "Prisma", "Supabase", "PostgreSQL"],
-        responsibilities: [
-          "Membangun autentikasi, akun, kategori, transaksi, API routes, dan dashboard reporting.",
-          "Merancang struktur data relasional untuk catatan keuangan.",
-          "Integrasi React Native masih menjadi kemungkinan untuk fase berikutnya.",
-        ],
-        actionLabel: "Lihat Studi Kasus",
-        actionHref: "/projects/personal-finance-application",
-        visual: "finance",
       },
     ] satisfies Project[],
     roadmap: [

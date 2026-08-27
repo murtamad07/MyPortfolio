@@ -75,6 +75,11 @@ export function ProjectCard({
           <p className="mt-4 max-w-xl text-sm leading-7 text-slate-400">
             {project.context}
           </p>
+          {project.liveUrl && (
+            <p className="mt-4 break-all font-mono text-[11px] text-emerald-300">
+              Live · {project.liveUrl}
+            </p>
+          )}
         </div>
 
         <div className="lg:border-l lg:border-white/10 lg:pl-10">

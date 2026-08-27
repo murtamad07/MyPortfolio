@@ -97,15 +97,28 @@ export function CaseStudyModal({ href, study, onClose }: CaseStudyModalProps) {
               <p className="mt-6 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
                 {study.overview}
               </p>
-              {href && (
-                <a
-                  href={href}
-                  className="mt-7 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-emerald-300 underline decoration-emerald-400/40 underline-offset-4 transition hover:text-emerald-200"
-                >
-                  Open permanent case study page
-                  <IoArrowForwardOutline aria-hidden="true" />
-                </a>
-              )}
+              <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
+                {study.liveUrl && (
+                  <a
+                    href={study.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-emerald-300 underline decoration-emerald-400/40 underline-offset-4 transition hover:text-emerald-200"
+                  >
+                    {study.liveUrl}
+                    <IoArrowForwardOutline aria-hidden="true" />
+                  </a>
+                )}
+                {href && (
+                  <a
+                    href={href}
+                    className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-slate-300 underline decoration-white/30 underline-offset-4 transition hover:text-white"
+                  >
+                    Open permanent case study page
+                    <IoArrowForwardOutline aria-hidden="true" />
+                  </a>
+                )}
+              </div>
             </div>
 
             <div className="mt-12 border-b border-white/10">

@@ -121,7 +121,7 @@ export default function Home() {
                 <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300">
                   Murtamad Pratama / {copy.ui.profileBadge}
                 </p>
-                <h1 className="text-balance mt-6 max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.055em] text-white sm:text-6xl lg:text-7xl">
+                <h1 className="text-balance mt-6 max-w-4xl text-5xl font-semibold leading-[1.02] tracking-[-0.055em] text-white sm:text-5xl lg:text-6xl">
                   {copy.ui.heroHeadline}
                 </h1>
                 <p className="mt-7 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">

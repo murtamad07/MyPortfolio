@@ -59,6 +59,16 @@ export default async function ProjectCaseStudy({
           <p className="mt-7 max-w-3xl text-base leading-8 text-slate-300 sm:text-lg">
             {study.overview}
           </p>
+          {study.liveUrl && (
+            <a
+              href={study.liveUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-7 inline-flex min-h-11 items-center text-sm font-semibold text-emerald-300 underline decoration-emerald-400/40 underline-offset-4 transition hover:text-emerald-200"
+            >
+              {study.liveUrl} &rarr;
+            </a>
+          )}
         </header>
 
         <div className="border-b border-white/10">

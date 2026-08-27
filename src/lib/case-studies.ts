@@ -12,6 +12,7 @@ export type CaseStudy = {
   challenges: string[];
   visualNote: string;
   technologies: string[];
+  liveUrl?: string;
 };
 
 export const caseStudies: Record<string, CaseStudy> = {
@@ -97,18 +98,20 @@ export const caseStudies: Record<string, CaseStudy> = {
   },
   "personal-finance-application": {
     title: "Personal Finance Application",
-    status: "Ongoing",
+    status: "Completed · Personal use",
     overview:
-      "A personal finance application for accounts, categories, transactions, and dashboard reporting.",
+      "A completed personal finance web and mobile application used privately to manage accounts, categories, transactions, and dashboard reporting.",
     problem:
       "Financial records needed a consistent relational structure and authenticated interface for day-to-day tracking.",
     role: "Full-Stack Developer",
     responsibilities: [
       "Built authentication, accounts, categories, transactions, API routes, and dashboard reporting.",
       "Designed the relational data structure for financial records.",
+      "Built a React Native mobile application alongside the web experience.",
     ],
     approach: [
       "Next.js and TypeScript for the interface and API routes.",
+      "React Native for the mobile application.",
       "Prisma with PostgreSQL for relational data access.",
       "Supabase for authentication and platform services.",
     ],
@@ -121,14 +124,23 @@ export const caseStudies: Record<string, CaseStudy> = {
     ],
     decisions: [
       "Kept accounts, categories, and transactions as related domain records.",
-      "Left React Native integration as a possible future phase, not a delivered feature.",
+      "Delivered both web and React Native experiences for personal use.",
+      "Kept commercial features and public onboarding outside the current scope.",
     ],
     challenges: [
-      "Keeping transaction data structured for useful reporting while the product remains in development.",
+      "Designing a consistent personal finance workflow across web and mobile interfaces.",
     ],
     visualNote:
-      "Additional screenshots and data diagrams will be added after the ongoing product reaches a review-ready state.",
-    technologies: ["Next.js", "TypeScript", "Prisma", "Supabase", "PostgreSQL"],
+      "Additional screenshots can be added after personal financial data has been fully sanitized.",
+    technologies: [
+      "Next.js",
+      "React Native",
+      "TypeScript",
+      "Prisma",
+      "Supabase",
+      "PostgreSQL",
+    ],
+    liveUrl: "https://finance.murtamadpratama.my.id",
   },
 };
 
