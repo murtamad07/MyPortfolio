@@ -1,29 +1,17 @@
 import {
   IoBriefcaseOutline,
-  IoBuildOutline,
   IoCheckmarkCircleOutline,
-  IoCloudUploadOutline,
   IoCodeSlashOutline,
   IoGitBranchOutline,
   IoGlobeOutline,
-  IoLayersOutline,
-  IoLockClosedOutline,
   IoLogoGithub,
-  IoLogoJavascript,
   IoLogoLinkedin,
-  IoLogoNodejs,
-  IoLogoReact,
-  IoLogoVercel,
   IoLogoWhatsapp,
   IoLocationOutline,
   IoMailOutline,
   IoPeopleOutline,
-  IoPhonePortraitOutline,
-  IoRocketOutline,
-  IoSendOutline,
   IoServerOutline,
   IoSettingsOutline,
-  IoTrophyOutline,
   IoLogoInstagram,
   IoLogoTiktok,
 } from "react-icons/io5";
@@ -376,9 +364,9 @@ export const content = {
     ui: {
       profileBadge: "Software Engineer",
       heroHeadline:
-        "Software Engineer | Full-Stack TypeScript & Node.js Developer",
+        "I build reliable software for real business workflows.",
       heroSummary:
-        "Software Engineer with more than three years of enterprise application experience and hands-on full-stack development using TypeScript, Next.js, React, Node.js, NestJS, PostgreSQL, Prisma, and Supabase. Experienced in authentication, RBAC, relational data modeling, API development, deployment, and production application support.",
+        "I’m a software engineer with more than three years in enterprise applications, now building full-stack products with TypeScript and Node.js. My work spans Next.js, NestJS, PostgreSQL, authentication, RBAC, deployment, and production support—grounded by deep OutSystems experience.",
       heroCtaProjects: "View Selected Work",
       heroCtaCv: "Download CV",
       heroCtaFullStackCv: "Full-Stack Resume",
@@ -395,7 +383,7 @@ export const content = {
       workLabel: "My Work",
       projectsTitle: "Selected Work",
       projectsDescription:
-        "Selected product builds and enterprise work with role, stack, and delivery context.",
+        "A closer look at systems where I translated workflows into authentication, relational data, role-based access, and production-ready delivery.",
       careerHighlightsTitle: "Enterprise Highlights",
       projectCtaTitle:
         "I turn business workflows into reliable software systems.",
@@ -697,9 +685,9 @@ export const content = {
     ui: {
       profileBadge: "Software Engineer",
       heroHeadline:
-        "Software Engineer | Full-Stack TypeScript & Node.js Developer",
+        "Saya membangun software andal untuk workflow bisnis yang nyata.",
       heroSummary:
-        "Software Engineer dengan pengalaman lebih dari tiga tahun pada aplikasi enterprise dan pengembangan full-stack menggunakan TypeScript, Next.js, React, Node.js, NestJS, PostgreSQL, Prisma, dan Supabase. Berpengalaman dalam autentikasi, RBAC, pemodelan data relasional, pengembangan API, deployment, dan support aplikasi produksi.",
+        "Saya seorang software engineer dengan pengalaman lebih dari tiga tahun pada aplikasi enterprise, kini membangun produk full-stack dengan TypeScript dan Node.js. Pekerjaan saya mencakup Next.js, NestJS, PostgreSQL, autentikasi, RBAC, deployment, dan support produksi—dengan fondasi pengalaman OutSystems yang kuat.",
       heroCtaProjects: "Lihat Karya Pilihan",
       heroCtaCv: "Download CV",
       heroCtaFullStackCv: "Resume Full-Stack",
@@ -716,7 +704,7 @@ export const content = {
       workLabel: "Karya Saya",
       projectsTitle: "Karya Pilihan",
       projectsDescription:
-        "Pilihan product build dan enterprise work dengan role, stack, dan konteks delivery.",
+        "Tiga sistem yang menunjukkan bagaimana saya menerjemahkan workflow menjadi autentikasi, data relasional, role-based access, dan delivery siap produksi.",
       careerHighlightsTitle: "Pencapaian Enterprise",
       projectCtaTitle:
         "Saya mengubah workflow bisnis menjadi sistem software yang reliable.",
